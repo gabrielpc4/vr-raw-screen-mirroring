@@ -51,3 +51,11 @@ MemoryCaptures/
 # Unity3D generated file confictes
 *.unityproxy
 *.unitypackage
+
+# Custom Project Cleanup
+.utmp/
+.vsconfig
+[Bb]ack[Uu]p[Tt]his[Ff]older_*/
+*.apk
+*.csproj
+*.sln
