@@ -1,0 +1,53 @@
+# This .gitignore file should be placed at the root of your Unity project.
+#
+# Metadata
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]serSettings/
+
+# MemoryDumps
+MemoryCaptures/
+
+# Asset Meta Data
+/[Aa]ssets/[Ss]cenes/*.unity.meta
+# (Optional) You can untrack all meta files, but it is generally recommended 
+# to keep them to preserve asset settings. 
+
+# Visual Studio cache directory
+.vs/
+
+# Gradle cache directory
+.gradle/
+
+# Android Studio project files
+/android/
+*.apk
+*.unitypackage
+
+# External Editor Files
+*.csproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity3D generated meta files
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Unity3D generated file confictes
+*.unityproxy
+*.unitypackage
