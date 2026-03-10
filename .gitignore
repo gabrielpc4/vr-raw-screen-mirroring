@@ -56,6 +56,7 @@ MemoryCaptures/
 .utmp/
 .vsconfig
 [Bb]ack[Uu]p[Tt]his[Ff]older_*/
+blindmonitor_BackUpThisFolder_ButDontShipItWithYourGame/
 *.apk
 *.csproj
 *.sln
