@@ -1,24 +1,23 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR;
+using Klak.Ndi;
 
 [RequireComponent(typeof(Camera))]
 public class BlindMonitor : MonoBehaviour
 {
-    public Texture2D sourceTexture;
+    [Header("NDI Configuration")]
+    public NdiReceiver ndiReceiver;
     public Shader blitShader;
+    
     private Material blitMaterial;
     private GameObject canvasGO;
+    private RawImage rawImage;
 
     void Start()
     {
         Camera cam = GetComponent<Camera>();
         
-        // Ensure camera is fixed at origin
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.identity;
-        
-        // Setup Shader and Material
+        // 1. Setup Shader and Material for 1:1 Eye Splitting
         if (blitShader == null)
         {
             blitShader = Shader.Find("Hidden/BlindMonitorUI");
@@ -28,36 +27,44 @@ public class BlindMonitor : MonoBehaviour
         {
             blitMaterial = new Material(blitShader);
         }
+        else
+        {
+            Debug.LogError("BlindMonitorUI shader not found! Ensure it is in the project.");
+        }
 
-        // Create a Canvas for UI-based rendering (reliable for VR both eyes)
+        // 2. Create the Canvas (Pinned to Eyes)
         canvasGO = new GameObject("BlindMonitorCanvas");
         canvasGO.transform.SetParent(this.transform, false);
         
         Canvas canvas = canvasGO.AddComponent<Canvas>();
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
         canvas.worldCamera = cam;
-        canvas.planeDistance = 1.0f; // Near enough to fill the view
+        canvas.planeDistance = 1.0f; 
 
-        // Use a RawImage to display the texture
+        // 3. Setup the RawImage to fill the viewport
         GameObject rawImageGO = new GameObject("MonitorImage");
         rawImageGO.transform.SetParent(canvasGO.transform, false);
         
-        RawImage rawImage = rawImageGO.AddComponent<RawImage>();
-        rawImage.texture = sourceTexture;
+        rawImage = rawImageGO.AddComponent<RawImage>();
         rawImage.material = blitMaterial;
         
-        // Make RawImage fill the whole screen
         RectTransform rt = rawImage.GetComponent<RectTransform>();
         rt.anchorMin = Vector2.zero;
         rt.anchorMax = Vector2.one;
         rt.sizeDelta = Vector2.zero;
     }
 
-    void LateUpdate()
+    void Update()
     {
-        // Force the camera to stay at origin (neutralize tracking)
+        // 4. Neutralize Headset Tracking (Force 1:1 mapping)
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
+
+        // 5. Inject the Live NDI Texture
+        if (ndiReceiver != null && rawImage != null)
+        {
+            rawImage.texture = ndiReceiver.texture;
+        }
     }
 
     void OnDestroy()
