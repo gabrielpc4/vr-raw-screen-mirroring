@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Klak.Ndi;
+using System.Linq;
 
 [RequireComponent(typeof(Camera))]
 public class BlindMonitor : MonoBehaviour
@@ -17,7 +18,11 @@ public class BlindMonitor : MonoBehaviour
     {
         Camera cam = GetComponent<Camera>();
         
-        // 1. Setup Shader and Material for 1:1 Eye Splitting
+        // Ensure camera is clean (Black background, no skybox)
+        cam.clearFlags = CameraClearFlags.SolidColor;
+        cam.backgroundColor = Color.black;
+
+        // Setup Shader and Material
         if (blitShader == null)
         {
             blitShader = Shader.Find("Hidden/BlindMonitorUI");
@@ -27,12 +32,8 @@ public class BlindMonitor : MonoBehaviour
         {
             blitMaterial = new Material(blitShader);
         }
-        else
-        {
-            Debug.LogError("BlindMonitorUI shader not found! Ensure it is in the project.");
-        }
 
-        // 2. Create the Canvas (Pinned to Eyes)
+        // Setup Canvas
         canvasGO = new GameObject("BlindMonitorCanvas");
         canvasGO.transform.SetParent(this.transform, false);
         
@@ -41,37 +42,47 @@ public class BlindMonitor : MonoBehaviour
         canvas.worldCamera = cam;
         canvas.planeDistance = 1.0f; 
 
-        // 3. Setup the RawImage to fill the viewport
+        // Setup RawImage
         GameObject rawImageGO = new GameObject("MonitorImage");
         rawImageGO.transform.SetParent(canvasGO.transform, false);
         
         rawImage = rawImageGO.AddComponent<RawImage>();
         rawImage.material = blitMaterial;
+        rawImage.color = Color.white; // Ensure it's not transparent
         
         RectTransform rt = rawImage.GetComponent<RectTransform>();
         rt.anchorMin = Vector2.zero;
         rt.anchorMax = Vector2.one;
         rt.sizeDelta = Vector2.zero;
+
+        Debug.Log("BlindMonitor: Initialized and waiting for NDI stream...");
     }
 
     void Update()
     {
-        // 4. Neutralize Headset Tracking (Force 1:1 mapping)
+        // Force 1:1 Head-Lock
         transform.localPosition = Vector3.zero;
         transform.localRotation = Quaternion.identity;
 
-        // 5. Inject the Live NDI Texture
         if (ndiReceiver != null && rawImage != null)
         {
-            rawImage.texture = ndiReceiver.texture;
+            if (ndiReceiver.texture != null)
+            {
+                if (rawImage.texture == null) 
+                    Debug.Log("BlindMonitor: NDI Texture Received!");
+                
+                rawImage.texture = ndiReceiver.texture;
+            }
+            else
+            {
+                // If we have a receiver but no texture, it might be waiting for the source
+                // You can check Unity Console to see if it's connected
+            }
         }
     }
 
     void OnDestroy()
     {
-        if (blitMaterial != null)
-        {
-            Destroy(blitMaterial);
-        }
+        if (blitMaterial != null) Destroy(blitMaterial);
     }
 }
