@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: BlindMonitor
+  productName: VRRawScreenMirroring
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -169,8 +169,8 @@ PlayerSettings:
   androidMaxAspectRatio: 2.4
   androidMinAspectRatio: 1
   applicationIdentifier:
-    Android: com.DefaultCompany.BlindMonitor
-    Standalone: com.DefaultCompany.BlindMonitor
+    Android: com.DefaultCompany.VRRawScreenMirroring
+    Standalone: com.DefaultCompany.VRRawScreenMirroring
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -780,14 +780,14 @@ PlayerSettings:
   editorAssembliesCompatibilityLevel: 1
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: BlindMonitor
+  metroPackageName: VRRawScreenMirroring
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: BlindMonitor
+  metroApplicationDescription: VRRawScreenMirroring
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -862,7 +862,7 @@ PlayerSettings:
   cloudProjectId: 60b45b46-9a62-423f-951b-b94404a29788
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: BlindMonitor
+  projectName: VRRawScreenMirroring
   organizationId: unity_49dc4d8c51821535fb47
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

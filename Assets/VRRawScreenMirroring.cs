@@ -4,7 +4,7 @@ using Klak.Ndi;
 using System.Linq;
 
 [RequireComponent(typeof(Camera))]
-public class BlindMonitor : MonoBehaviour
+public class VRRawScreenMirroring : MonoBehaviour
 {
     [Header("NDI Configuration")]
     public NdiReceiver ndiReceiver;
@@ -25,7 +25,7 @@ public class BlindMonitor : MonoBehaviour
         // Setup Shader and Material
         if (blitShader == null)
         {
-            blitShader = Shader.Find("Hidden/BlindMonitorUI");
+            blitShader = Shader.Find("Hidden/VRRawScreenMirroringUI");
         }
         
         if (blitShader != null)
@@ -34,7 +34,7 @@ public class BlindMonitor : MonoBehaviour
         }
 
         // Setup Canvas
-        canvasGO = new GameObject("BlindMonitorCanvas");
+        canvasGO = new GameObject("VRRawScreenMirroringCanvas");
         canvasGO.transform.SetParent(this.transform, false);
         
         Canvas canvas = canvasGO.AddComponent<Canvas>();
@@ -55,7 +55,7 @@ public class BlindMonitor : MonoBehaviour
         rt.anchorMax = Vector2.one;
         rt.sizeDelta = Vector2.zero;
 
-        Debug.Log("BlindMonitor: Initialized and waiting for NDI stream...");
+        Debug.Log("VRRawScreenMirroring: Initialized and waiting for NDI stream...");
     }
 
     void Update()
@@ -69,7 +69,7 @@ public class BlindMonitor : MonoBehaviour
             if (ndiReceiver.texture != null)
             {
                 if (rawImage.texture == null) 
-                    Debug.Log("BlindMonitor: NDI Texture Received!");
+                    Debug.Log("VRRawScreenMirroring: NDI Texture Received!");
                 
                 rawImage.texture = ndiReceiver.texture;
             }

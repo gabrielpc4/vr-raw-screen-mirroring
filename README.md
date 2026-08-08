@@ -1,6 +1,6 @@
-# Meta Quest 3 "Blind Monitor" - 1:1 Pixel Mapping
+# Meta Quest 3 "VR Raw Screen Mirroring" - 1:1 Pixel Mapping
 
-This project implements a high-precision "Blind Monitor" for the Meta Quest 3. It allows a second headset to act as a pure display slave to a primary PCVR session, maintaining 100% accuracy in stereoscopy, scale, and Field of View (FOV).
+This project implements a high-precision "VR Raw Screen Mirroring" for the Meta Quest 3. It allows a second headset to act as a pure display slave to a primary PCVR session, maintaining 100% accuracy in stereoscopy, scale, and Field of View (FOV).
 
 ## 🎯 The Problem
 Standard VR sharing solutions (Bigscreen, Skybox, Browsers) render the source video onto a virtual screen *inside* a 3D environment. This causes the Meta Quest's Compositor to apply lens distortion over an image that already contains its own perspective. This "double distortion" destroys 1:1 pixel mapping and creates scale/depth inaccuracies.
@@ -9,7 +9,7 @@ Standard VR sharing solutions (Bigscreen, Skybox, Browsers) render the source vi
 This application bypasses the standard 3D rendering pipeline:
 1. **Direct Buffer Injection:** Instead of a virtual screen in a 3D world, we use a custom UI-based rendering path that fills the Quest's eye buffers directly.
 2. **Stereoscopic Splitting:** A custom shader (`EyeSplit.shader`) detects the hardware Eye Index (Left/Right) and pulls the corresponding half of a Side-by-Side (SBS) frame.
-3. **Tracking Bypass:** Spatial tracking is neutralized, pinning the image to the user's vision (the "Blind Monitor" effect).
+3. **Tracking Bypass:** Spatial tracking is neutralized, pinning the image to the user's vision (the "VR Raw Screen Mirroring" effect).
 4. **Native Distortion:** By injecting into the native camera buffers, the Quest's hardware-level distortion exactly cancels out the rectilinear projection of the source, resulting in a perfect optical replica.
 
 ## 🎥 Live Streaming Architecture
@@ -23,7 +23,7 @@ To transition from static screenshots to a live feed, we use the following stack
   - **Bitrate:** 150,000 Kbps (CBR).
   - **Preset:** P7: Slowest (Best Quality).
   - **Tuning:** Ultra High Quality (Multipass: Two Passes).
-- **Receiver (Quest 3):** Unity-based NDI receiver (KlakNDI) feeding the `BlindMonitor.cs` script.
+- **Receiver (Quest 3):** Unity-based NDI receiver (KlakNDI) feeding the `VRRawScreenMirroring.cs` script.
 - **Network:** Wi-Fi 6 (802.11ax) 5GHz AX1500 Router (TP-Link Archer AX1500).
 
 ## 🚀 Current State

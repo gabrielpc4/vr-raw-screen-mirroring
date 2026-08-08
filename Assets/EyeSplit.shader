@@ -1,4 +1,4 @@
-Shader "Hidden/BlindMonitorUI"
+Shader "Hidden/VRRawScreenMirroringUI"
 {
     Properties
     {
