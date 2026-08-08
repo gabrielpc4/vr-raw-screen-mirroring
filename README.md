@@ -48,4 +48,6 @@ To transition from static screenshots to a live feed, we use the following stack
 4. Build and Run the `SampleScene` to your Quest 3.
 
 ---
-**Developed by Gabriel Pinheiro de Carvalho (gabrielpc4)**
+## License
+
+This project is licensed under the [MIT License](LICENSE).
